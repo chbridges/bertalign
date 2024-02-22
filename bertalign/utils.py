@@ -1,6 +1,5 @@
 import re
 from googletrans import Translator
-from sentence_splitter import SentenceSplitter
 
 def clean_text(text):
     clean_text = []
@@ -23,37 +22,6 @@ def detect_lang(text):
     if lang.startswith('zh'):
         lang = 'zh'
     return lang
-
-def split_sents(text, lang):
-    if lang in LANG.SPLITTER:
-        if lang == 'zh':
-            sents = _split_zh(text)
-        else:
-            splitter = SentenceSplitter(language=lang)
-            sents = splitter.split(text=text) 
-            sents = [sent.strip() for sent in sents]
-        return sents
-    else:
-        raise Exception('The language {} is not suppored yet.'.format(LANG.ISO[lang]))
-    
-def _split_zh(text, limit=1000):
-        sent_list = []
-        text = re.sub('(?P<quotation_mark>([。？！](?![”’"\'）])))', r'\g<quotation_mark>\n', text)
-        text = re.sub('(?P<quotation_mark>([。？！]|…{1,2})[”’"\'）])', r'\g<quotation_mark>\n', text)
-
-        sent_list_ori = text.splitlines()
-        for sent in sent_list_ori:
-            sent = sent.strip()
-            if not sent:
-                continue
-            else:
-                while len(sent) > limit:
-                    temp = sent[0:limit]
-                    sent_list.append(temp)
-                    sent = sent[limit:]
-                sent_list.append(sent)
-
-        return sent_list
         
 def yield_overlaps(lines, num_overlaps):
     lines = [_preprocess_line(line) for line in lines]

@@ -6,15 +6,14 @@ from bertalign.utils import *
 
 class Bertalign:
     def __init__(self,
-                 src,
-                 tgt,
-                 max_align=5,
-                 top_k=3,
-                 win=5,
-                 skip=-0.1,
-                 margin=True,
-                 len_penalty=True,
-                 is_split=False,
+                 src: str,
+                 tgt: str ,
+                 max_align: int = 5,
+                 top_k: int = 3,
+                 win: int = 5,
+                 skip: float = -0.1,
+                 margin: bool = True,
+                 len_penalty: bool = True,
                ):
         
         self.max_align = max_align
@@ -29,12 +28,8 @@ class Bertalign:
         src_lang = detect_lang(src)
         tgt_lang = detect_lang(tgt)
         
-        if is_split:
-            src_sents = src.splitlines()
-            tgt_sents = tgt.splitlines()
-        else:
-            src_sents = split_sents(src, src_lang)
-            tgt_sents = split_sents(tgt, tgt_lang)
+        src_sents = src.splitlines()
+        tgt_sents = tgt.splitlines()
  
         src_num = len(src_sents)
         tgt_num = len(tgt_sents)
