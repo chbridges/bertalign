@@ -9,7 +9,6 @@ Changes made to the original code:
 
 To-do:
 
-* **Update requirements.txt** After the prior changes, 3 requirements can be dropped and faiss-cpu will be added as a new requirement.
 * **Update setup.py** The current minimal setup.py does not install dependencies, i.e., the user needs to manually install the requirements from requirements.txt.
 
 # Bertalign
