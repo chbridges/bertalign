@@ -3,10 +3,10 @@
 Changes made to the original code:
 
 * **Removed sentence splitting to get tid of the [sentence-splitter](https://github.com/mediacloud/sentence-splitter) dependency** This step now needs to be handled by the user. Before, it had to be overriden using the flag 'is_split=True'.
+* **Removed language detection to get rid of the [https://github.com/ssut/py-googletrans](googletrans) dependency** The language was only used for logging and (formerly) sentence splitting. It raised an exception when the determined language code was not hardcoded. 
 
 To-do:
 
-* **Remove language detection** The source language is only used for logging and (formerly) sentence splitting. It raises an exception when the determined language code is not hardcoded for logging purposes. Removing the language detection gets rid of this possible exception and the [https://github.com/ssut/py-googletrans](googletrans) dependency.
 * **Add *verbose* flag to suppress output** While the many print statements are great for debugging, they quickly clog up the log, especially when aligning small batches of text. Optionally deactivating them can thus lead to more clarity when logging is handled by the user.
 * **Replace faiss-gpu with faiss-gpu** The GPU version of [https://github.com/kyamagu/faiss-wheels](Faiss) is only supported up until Release 1.7.2, and thus until Python 3.10. Additionally, the first alignment returns an empty list when computing the indices on the GPU, which breaks bertalign, but it works on the CPU. Removing GPU support in this part of the code will thus resolve this breaking bug and the dependency issue for recent Python versions with a minimal impact on the runtime.
 * **Update requirements.txt** After the prior changes, 3 requirements can be dropped and faiss-cpu will be added as a new requirement.
