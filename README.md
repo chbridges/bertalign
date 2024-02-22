@@ -1,3 +1,13 @@
+### Original README.md below.
+
+Changes made to the original code:
+
+* **Replaced faiss-gpu with faiss-cpu to resolve bugs and dependency issues**<br/>The GPU version of [https://github.com/kyamagu/faiss-wheels](Faiss) is only supported up until Release 1.7.2, and thus until Python 3.10. Additionally, the first-step alignment returns an empty list when searching the indices on the GPU but it works fine on the CPU. The impact on the runtime is minimal even for several hundreds of lines of text.
+* **Removed sentence splitting to get tid of the [sentence-splitter](https://github.com/mediacloud/sentence-splitter) dependency**<br/>This step now needs to be handled by the user. Before, it had to be overriden using the flag `is_split=True`.
+* **Removed language detection to get rid of the [https://github.com/ssut/py-googletrans](googletrans) dependency**<br/>The language was only used for logging and (formerly) sentence splitting. It raised an exception when the determined language code was not hardcoded.
+* **Added verbosity flag to suppress output**<br/>While the many print statements are great for debugging, they quickly clog up the og, especially when aligning small batches of text. Optionally deactivating them can now lead to more clarity when logging is handled by the user.
+* **Updated requirements.txt and setup.py**<br/>You don't have to install dependencies manually when running `pip install git+https://github.com/chbridges/bertalign.git`, but you will want to install PyTorch before if you don't use CUDA 12.1.
+
 # Bertalign
 
 An automatic mulitlingual sentence aligner.
